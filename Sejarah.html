@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMA Negeri 1 Bengkulu Tengah</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family: Arial, sans-serif;}
+
+    [x-cloak] { display: none !important; }
+    @media (max-width: 767px) {
+      .geser-kanan-mobile {
+        margin-left: 3rem;
+      }
+      .naikkan-banner-mobile {
+        padding-top: 120px !important;
+      }
+    }
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(2, 50, 97);
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      z-index: 1000;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* jarak antara logo dan teks */
+      font-size: 1.2rem;
+      font-weight: bold;
+      font-family: 'Helvetica', serif;
+    }
+    .logo-img {
+      width: 40px; /* sesuaikan ukuran logo */
+      height: auto;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;      
+      margin: 0;
+      padding: 0;
+      transform: translateX(-20px); /* geser menu ke kiri */
+    }
+    nav ul li a {
+      color:#fff;
+      text-decoration:none;
+      font-family: "Verdana", serif;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+/* Hover efek untuk menu utama */
+nav ul li a {
+  color:#fff;
+  text-decoration:none;
+  font-family: "Verdana", serif;
+  font-size: 16px;
+  font-weight: normal;
+  padding: 8px 12px; /* biar area klik lebih besar */
+  border-radius: 5px; /* biar ada sudut halus */
+  transition: 0.3s;
+}
+
+nav ul li a:hover {
+  background: #045282fb; /* kuning emas */
+  color: #002244;      /* teks navy gelap */
+}
+
+    nav ul li {
+      position: relative; /* untuk submenu */
+    }
+    nav ul li .submenu {
+      display: none;
+      position: absolute;
+      top: 100%; 
+      left: 0;
+      background: rgba(0, 34, 68, 0.95);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      min-width: 220px;
+      border-radius: 5px;
+    }
+   /* Hover efek untuk menu utama */
+nav ul li a:hover {
+  background: #046eaffb; /* biru lebih terang */
+  color: #fff;           /* teks tetap putih */
+}
+
+    nav ul li.dropdown:hover .submenu {
+      display: block;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .video-background {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .video-background iframe {
+      position: absolute;
+      top: 73%; 
+      left: 50%;
+      width: 100vw;
+      height: 58.25vw;
+      min-height: 100vh;
+      min-width: 177.78vh; 
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      border: none;
+    }
+
+    /* Hero Content (Teks di Tengah Video) */
+    .hero-content {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+      padding: 0 20px;
+      z-index: 2;
+    }
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .hero-content h1 {
+      font-size: 3rem;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .btn {
+      margin-top: 20px;
+      padding: 12px 28px;
+      border: 2px solid #fff;
+      border-radius: 30px;
+      color: #fff;
+      text-decoration: none;
+      transition: .3s;
+    }
+    .btn:hover {background:#fff; color:#002244;}
+
+  .berita h2 {
+  margin-bottom: 10px; /* jarak lebih kecil ke h3 */
+}
+
+.berita h3 {
+  margin-top: -2%;       /* reset margin atas */
+  margin-bottom: 25px; /* jarak ke grid */
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+    .latest-news {
+  padding: 80px 20px;
+  background: #002244; /* warna navy gelap */
+  color: #fff;
+  text-align: center;
+}
+
+.latest-news h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.latest-news h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #ffd700;
+  margin: 10px auto 0;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.news-card {
+  background: #fff;
+  color: #002244;
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: left;
+  transition: transform 0.3s;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+}
+
+.news-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.news-date {
+  font-weight: bold;
+  color: #ffd700;
+  padding: 10px 15px 0;
+}
+
+.news-card h3 {
+  font-size: 1.1rem;
+  padding: 5px 15px;
+}
+
+.news-card p {
+  font-size: 0.9rem;
+  padding: 0 15px 15px;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+}
+
+nav ul li.sosmed {
+  display: flex;
+  gap: 2px; /* jarak antar ikon */
+  margin-left: 20px; /* jarak dari menu terakhir */
+}
+
+nav ul li.sosmed a img {
+  width: 30px;  /* ukuran ikon */
+  height: 30px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+nav ul li.sosmed a img:hover {
+  transform: scale(1.2); /* efek zoom saat hover */
+}
+
+</style>
+</head>
+<body>
+  <!-- NAVBAR UTAMA UNTUK DESKTOP & TABLET -->
+<nav class="bg-gray-800 text-white p-4 hidden md:flex items-center justify-between">
+  <div class="flex items-center gap-2 text-xl font-bold">
+    <img src="logo sma.png" alt="Logo SMA" class="w-8 h-auto">
+    Official Website
+  </div>
+  <ul class="flex gap-6 items-center">
+    <li><a href="index.html" class="hover:underline">Home</a></li>
+    <li class="relative group">
+      <a href="#" class="hover:underline">Profil</a>
+      <ul class="absolute hidden group-hover:block bg-gray-700 mt-2 rounded shadow-lg">
+        <li><a href="Sambutan.html" class="block px-4 py-2 hover:bg-gray-600">Sambutan</a></li>
+        <li><a href="Visi.html" class="block px-4 py-2 hover:bg-gray-600">Visi & Misi</a></li>
+        <li><a href="Struktur.html" class="block px-4 py-2 hover:bg-gray-600">Struktur Organisasi</a></li>
+        <li><a href="Sejarah.html" class="block px-4 py-2 hover:bg-gray-600">Sejarah</a></li>
+        <li><a href="Sarana.html" class="block px-4 py-2 hover:bg-gray-600">Sarana Prasarana</a></li>
+      </ul>
+    </li>
+    <li><a href="Berita.html" class="hover:underline">Berita</a></li>
+    <li><a href="Prestasi.html" class="hover:underline">Prestasi</a></li>
+    <li><a href="Eskul.html" class="hover:underline">Ekstrakurikuler</a></li>
+    <li><a href="Galeri.html" class="hover:underline">Galeri</a></li>
+    <li class="flex gap-3">
+      <a href="https://instagram.com/" target="_blank"><img src="ig.png" alt="Instagram" class="w-6 h-6"></a>
+      <a href="https://tiktok.com/" target="_blank"><img src="tiktok.png" alt="TikTok" class="w-6 h-6"></a>
+      <a href="https://youtube.com/" target="_blank"><img src="yt.png" alt="YouTube" class="w-6 h-6"></a>
+      <a href="https://facebook.com/" target="_blank"><img src="facebook logo.png" alt="Facebook" class="w-6 h-6"></a>
+    </li>
+  </ul>
+</nav>
+
+<!-- NAVBAR KHUSUS MOBILE -->
+<div class="md:hidden" x-data="{open:false, profil:false}">
+  <nav class="bg-gray-800 text-white p-4 flex items-center justify-between">
+    <!-- Logo -->
+    <div class="flex items-center gap-2 font-bold">
+      <img src="logo sma.png" alt="Logo SMA" class="w-8 h-auto">
+      Official Website
+    </div>
+
+    <!-- Sosmed + Hamburger -->
+    <div class="flex items-center gap-3">
+      <!-- Sosmed -->
+      <div class="flex gap-2">
+        <a href="https://instagram.com/" target="_blank"><img src="ig.png" alt="Instagram" class="w-6 h-6"></a>
+        <a href="https://tiktok.com/" target="_blank"><img src="tiktok.png" alt="TikTok" class="w-6 h-6"></a>
+        <a href="https://youtube.com/" target="_blank"><img src="yt.png" alt="YouTube" class="w-6 h-6"></a>
+        <a href="https://facebook.com/" target="_blank"><img src="facebook logo.png" alt="Facebook" class="w-6 h-6"></a>
+      </div>
+
+      <!-- Tombol Hamburger -->
+      <button @click="open = !open">
+        <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg x-show="open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Dropdown Menu Mobile -->
+  <div x-show="open" x-transition>
+    <ul class="flex flex-col bg-gray-700 text-white w-full">
+      <li><a href="index.html" class="block px-4 py-2 hover:bg-gray-600">Home</a></li>
+      
+      <!-- Profil dengan submenu -->
+      <li>
+        <button @click="profil = !profil" class="w-full flex justify-between items-center px-4 py-2 hover:bg-gray-600">
+          Profil
+          <span x-text="profil ? '▲' : '▼'"></span>
+        </button>
+        <ul x-show="profil" x-transition class="flex flex-col bg-gray-600">
+          <li><a href="Sambutan.html" class="block px-6 py-2 hover:bg-gray-500">Sambutan</a></li>
+          <li><a href="Visi.html" class="block px-6 py-2 hover:bg-gray-500">Visi & Misi</a></li>
+          <li><a href="Struktur.html" class="block px-6 py-2 hover:bg-gray-500">Struktur Organisasi</a></li>
+          <li><a href="Sejarah.html" class="block px-6 py-2 hover:bg-gray-500">Sejarah</a></li>
+          <li><a href="Sarana.html" class="block px-6 py-2 hover:bg-gray-500">Sarana Prasarana</a></li>
+        </ul>
+      </li>
+
+      <li><a href="index.html" class="block px-4 py-2 hover:bg-gray-600">Home</a></li>
+      <li><a href="Sambutan.html" class="block px-4 py-2 hover:bg-gray-600">Sambutan</a></li>
+      <li><a href="Visi.html" class="block px-4 py-2 hover:bg-gray-600">Visi & Misi</a></li>
+      <li><a href="Struktur.html" class="block px-4 py-2 hover:bg-gray-600">Struktur Organisasi</a></li>
+      <li><a href="Sejarah.html" class="block px-4 py-2 hover:bg-gray-600">Sejarah</a></li>
+      <li><a href="Sarana.html" class="block px-4 py-2 hover:bg-gray-600">Sarana Prasarana</a></li>
+      <li><a href="Berita.html" class="block px-4 py-2 hover:bg-gray-600">Berita</a></li>
+      <li><a href="Prestasi.html" class="block px-4 py-2 hover:bg-gray-600">Prestasi</a></li>
+      <li><a href="Eskul.html" class="block px-4 py-2 hover:bg-gray-600">Ekstrakurikuler</a></li>
+      <li><a href="Galeri.html" class="block px-4 py-2 hover:bg-gray-600">Galeri</a></li>
+    </ul>
+  </div>
+</div>
+
+  <section class="relative w-full h-screen overflow-hidden">
+  <!-- Video Background -->
+  <div class="absolute inset-0 overflow-hidden">
+    <iframe
+      class="absolute top-1/2 left-1/2 w-[120vw] h-[120vh] -translate-x-1/2 -translate-y-1/2"
+      src="https://www.youtube.com/embed/E-Zrl46GswA?autoplay=1&mute=1&loop=1&playlist=E-Zrl46GswA&controls=0&showinfo=0&modestbranding=1"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Overlay Konten -->
+  <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4 z-10">
+    <p class="text-lg md:text-xl">Welcome to</p>
+    <h1 class="text-3xl md:text-5xl font-bold">SMA NEGERI 1</h1>
+    <h1 class="text-3xl md:text-5xl font-bold">BENGKULU TENGAH</h1>
+    <a href="https://youtu.be/E-Zrl46GswA?si=uD-YMH-YeGnt4oOr" class="btn mt-4 inline-block" target="_blank">Learn More</a>
+  </div>
+</section>
+    <!-- Section dengan Background Biru -->
+ <section class="bg-blue-900 text-white py-12 mt-0">
+    <div class="max-w-5xl mx-auto px-4" data-aos="fade-down" data-aos-duration="1000" data-aos-once="false">
+    <h2 class="text-4xl font-bold mb-2 text-center">SEJARAH SEKOLAH</h2>
+    <h3 class="text-xl mb-4 text-center">SMA Negeri 1 Bengkulu Tengah</h3>
+    <p class="font-lato text-lg text-white text-center max-w-xl mx-auto leading-relaxed mb-6">
+     Halaman ini menjelaskan secara singkat tentang sejarah SMA Negeri 1 Bengkulu Tengah, mulai dari 
+     awal pendiriannya hingga perkembangan yang telah dicapai dalam mendukung kemajuan pendidikan di 
+     wilayah sekitarnya.
+    </p>
+    <div class="bg-white text-black rounded-2xl p-8" data-aos="fade-up" data-aos-duration="1000" data-aos-once="false">
+       
+       <h1 class="text-2xl font-bold mb-4">Sejarah</h1>
+        <div class="text-justify">
+          <p class="text-lg mb-4"><b>SMA NEGERI 1 BENGKULU TENGAH:</b> Menempa Generasi Sejak 1991</p>
+          <p class="text-lg mb-4">Di jantung KABUPATEN BENGKULU TENGAH, berdiri kokoh SMA NEGERI 1 BENGKULU
+                                  TENGAH, menyapa pagi dengan semangat para penerus bangsa. Sejak tahun 1991,
+                                  gerbangnya terbuka lebar, menyambut generasi demi generasi untuk ditempa menjadi 
+                                  tunas-tunas harapan.</p>          
+          <p class="text-lg mb-4">Berawal dari mimpi sederhana sekelompok cendekiawan, SMA NEGERI 1 BENGKULU TENGAH 
+                                  didirikan dengan tekad mulia: mencerdaskan kehidupan bangsa. Gedungnya yang 
+                                  sederhana tak menyurutkan semangat para pengajar dan murid. Di bawah naungan pohon beringin 
+                                  tua, ilmu pengetahuan mengalir bagai air, menyiram jiwa-jiwa muda yang haus akan pengetahuan.</p>
+                  <p class="text-lg mb-4">Tahun demi tahun, SMA NEGERI 1 BENGKULU TENGAH menorehkan prestasi demi 
+                    prestasi. Siswa-siswinya tak hanya unggul di bidang akademik, tapi juga aktif dalam berbagai
+                     kegiatan ekstrakurikuler. Lorong-lorong kelasnya dihiasi dengan piala dan penghargaan, menjadi
+                      bukti nyata dedikasi dan kerja keras seluruh civitas akademika.</p>
+                  <p class="text-lg mb-4">Di balik gemerlap prestasi, SMA NEGERI 1 BENGKULU TENGAH tak lupa
+                     menanamkan nilai-nilai kemanusiaan pada murid-muridnya. Rasa cinta tanah air, kepedulian 
+                     terhadap sesama, dan semangat gotong royong menjadi fondasi utama dalam proses belajar 
+                     mengajar. Tak heran, banyak alumni SMA NEGERI 1 BENGKULU TENGAH yang menjadi tokoh-tokoh 
+                     inspiratif di bidangnya masing-masing.</p>
+                  <p class="text-lg mb-4">Di usianya yang ke-33, SMA NEGERI 1 BENGKULU TENGAH terus melangkah maju.
+                     Gedungnya yang dulu sederhana kini telah berganti dengan bangunan modern yang megah. 
+                     Fasilitasnya pun semakin lengkap, menunjang proses belajar mengajar yang semakin berkualitas.</p>
+                  <p class="text-lg mb-4">Namun, di tengah kemajuan zaman, SMA NEGERI 1 BENGKULU TENGAH tak pernah
+                     melupakan jati dirinya. Semangat juang para pendirinya masih tertanam kuat dalam sanubari para 
+                     guru dan murid. Mereka terus berkarya, mendidik generasi muda dengan penuh cinta dan dedikasi, 
+                     demi membangun masa depan bangsa yang lebih gemilang.</p>
+                  <p class="text-lg mb-4">SMA NEGERI 1 BENGKULU TENGAH: lebih dari sekadar sekolah, ia adalah rumah
+                     kedua bagi para muridnya. Di sini, mereka belajar, bertumbuh, dan menemukan jati diri mereka. 
+                     Di sini, mereka ditempa menjadi insan berkarakter mulia, siap mengabdikan diri untuk bangsa dan negara.</p>
+                  <p class="text-lg mb-4 font-semibold">Kisah SMA NEGERI 1 BENGKULU TENGAH:</p>
+                  <ul class="list-disc pl-6 text-lg mb-4 space-y-2">
+                    <li>1991: Didirikan oleh sekelompok cendekiawan dengan mimpi mencerdaskan kehidupan bangsa.</li>
+                    <li>Tahun-tahun awal: Berfokus pada membangun fondasi akademik dan menanamkan nilai-nilai 
+                      kemanusiaan.</li>
+                    <li>Masa keemasan: Prestasi demi prestasi diraih, alumni menjadi tokoh-tokoh inspiratif.</li>
+                    <li>Sekarang: Terus maju dengan fasilitas modern dan semangat juang yang tak padam.</li>
+                  </ul>
+                  <p class="text-lg mb-4 font-semibold">Nilai-nilai SMA NEGERI 1 BENGKULU TENGAH:</p>
+                  <ul class="list-disc pl-6 text-lg mb-4 space-y-2">
+                    <li><strong>Cinta tanah air:</strong> Menanamkan rasa bangga dan tanggung jawab terhadap bangsa
+                       dan negara.</li>
+                    <li><strong>Kepedulian terhadap sesama:</strong> Mendidik murid untuk saling tolong menolong 
+                      dan membantu yang membutuhkan.</li>
+                    <li><strong>Semangat gotong royong:</strong> Menumbuhkan rasa kebersamaan dan kerjasama dalam 
+                      mencapai tujuan bersama.</li>
+                  </ul>
+                  <p class="text-lg mb-4 italic">SMA NEGERI 1 BENGKULU TENGAH: Menempa generasi muda berkarakter 
+                    mulia, siap membangun masa depan bangsa yang gemilang.</p>
+    </div>
+  </section>
+
+  <!-- AOS Library JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: false,
+    });
+
+    const observerOptions = {
+      threshold: 0.5
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const el = entry.target;
+
+        if (entry.isIntersecting) {
+          el.classList.add('animate-slideIn');
+          el.addEventListener('animationend', () => {
+            el.classList.remove('animate-slideIn');
+          }, { once: true }); 
+        }
+      });
+    }, observerOptions);
+
+    const sectionDesc = document.getElementById('section-desc');
+    const footer = document.getElementById('footer');
+    observer.observe(sectionDesc);
+    observer.observe(footer);
+  </script>
+  </body>
+  </html>

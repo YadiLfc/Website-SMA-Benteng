@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMA Negeri 1 Bengkulu Tengah</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family: Arial, sans-serif;}
+
+    [x-cloak] { display: none !important; }
+    @media (max-width: 767px) {
+      .geser-kanan-mobile {
+        margin-left: 3rem;
+      }
+      .naikkan-banner-mobile {
+        padding-top: 120px !important;
+      }
+    }
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(2, 50, 97);
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      z-index: 1000;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* jarak antara logo dan teks */
+      font-size: 1.2rem;
+      font-weight: bold;
+      font-family: 'Helvetica', serif;
+    }
+    .logo-img {
+      width: 40px; /* sesuaikan ukuran logo */
+      height: auto;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;      
+      margin: 0;
+      padding: 0;
+      transform: translateX(-20px); /* geser menu ke kiri */
+    }
+    nav ul li a {
+      color:#fff;
+      text-decoration:none;
+      font-family: "Verdana", serif;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+/* Hover efek untuk menu utama */
+nav ul li a {
+  color:#fff;
+  text-decoration:none;
+  font-family: "Verdana", serif;
+  font-size: 16px;
+  font-weight: normal;
+  padding: 8px 12px; /* biar area klik lebih besar */
+  border-radius: 5px; /* biar ada sudut halus */
+  transition: 0.3s;
+}
+
+nav ul li a:hover {
+  background: #045282fb; /* kuning emas */
+  color: #002244;      /* teks navy gelap */
+}
+
+    nav ul li {
+      position: relative; /* untuk submenu */
+    }
+    nav ul li .submenu {
+      display: none;
+      position: absolute;
+      top: 100%; 
+      left: 0;
+      background: rgba(0, 34, 68, 0.95);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      min-width: 220px;
+      border-radius: 5px;
+    }
+   /* Hover efek untuk menu utama */
+nav ul li a:hover {
+  background: #046eaffb; /* biru lebih terang */
+  color: #fff;           /* teks tetap putih */
+}
+
+    nav ul li.dropdown:hover .submenu {
+      display: block;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .video-background {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .video-background iframe {
+      position: absolute;
+      top: 73%; 
+      left: 50%;
+      width: 100vw;
+      height: 58.25vw;
+      min-height: 100vh;
+      min-width: 177.78vh; 
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      border: none;
+    }
+
+    /* Hero Content (Teks di Tengah Video) */
+    .hero-content {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+      padding: 0 20px;
+      z-index: 2;
+    }
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .hero-content h1 {
+      font-size: 3rem;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .btn {
+      margin-top: 20px;
+      padding: 12px 28px;
+      border: 2px solid #fff;
+      border-radius: 30px;
+      color: #fff;
+      text-decoration: none;
+      transition: .3s;
+    }
+    .btn:hover {background:#fff; color:#002244;}
+
+  .berita h2 {
+  margin-bottom: 10px; /* jarak lebih kecil ke h3 */
+}
+
+.berita h3 {
+  margin-top: -2%;       /* reset margin atas */
+  margin-bottom: 25px; /* jarak ke grid */
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+    .latest-news {
+  padding: 80px 20px;
+  background: #002244; /* warna navy gelap */
+  color: #fff;
+  text-align: center;
+}
+
+.latest-news h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.latest-news h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #ffd700;
+  margin: 10px auto 0;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.news-card {
+  background: #fff;
+  color: #002244;
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: left;
+  transition: transform 0.3s;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+}
+
+.news-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.news-date {
+  font-weight: bold;
+  color: #ffd700;
+  padding: 10px 15px 0;
+}
+
+.news-card h3 {
+  font-size: 1.1rem;
+  padding: 5px 15px;
+}
+
+.news-card p {
+  font-size: 0.9rem;
+  padding: 0 15px 15px;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+}
+
+nav ul li.sosmed {
+  display: flex;
+  gap: 2px; /* jarak antar ikon */
+  margin-left: 20px; /* jarak dari menu terakhir */
+}
+
+nav ul li.sosmed a img {
+  width: 30px;  /* ukuran ikon */
+  height: 30px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+nav ul li.sosmed a img:hover {
+  transform: scale(1.2); /* efek zoom saat hover */
+}
+
+ /* =============== KHUSUS MOBILE =============== */
+    @media (max-width: 600px) {
+      /* Sembunyikan menu utama */
+      nav ul.menu-desktop {display: none;}
+
+      /* Bar mobile */
+      .mobile-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* Hamburger */
+      .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+      }
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: white;
+      }
+
+      /* Menu mobile */
+      .menu-mobile {
+        display: none;
+        flex-direction: column;
+        gap: 15px;
+        background: #004080;
+        padding: 10px;
+      }
+      .menu-mobile a {
+        color: white;
+        text-decoration: none;
+      }
+      .menu-mobile.active {display: flex;}
+    }
+
+    /* Tablet & desktop tetap normal */
+    @media (min-width: 601px) {
+      .mobile-bar, .menu-mobile {display: none;}
+      nav ul.menu-desktop {display: flex;}
+    }
+
+  </style>
+</head>
+<body>
+  <!-- NAVBAR UTAMA UNTUK DESKTOP & TABLET -->
+<nav class="bg-gray-800 text-white p-4 hidden md:flex items-center justify-between">
+  <div class="flex items-center gap-2 text-xl font-bold">
+    <img src="logo sma.png" alt="Logo SMA" class="w-8 h-auto">
+    Official Website
+  </div>
+  <ul class="flex gap-6 items-center">
+    <li><a href="index.html" class="hover:underline">Home</a></li>
+    <li class="relative group">
+      <a href="#" class="hover:underline">Profil</a>
+      <ul class="absolute hidden group-hover:block bg-gray-700 mt-2 rounded shadow-lg">
+        <li><a href="Sambutan.html" class="block px-4 py-2 hover:bg-gray-600">Sambutan</a></li>
+        <li><a href="Visi.html" class="block px-4 py-2 hover:bg-gray-600">Visi & Misi</a></li>
+        <li><a href="Struktur.html" class="block px-4 py-2 hover:bg-gray-600">Struktur Organisasi</a></li>
+        <li><a href="Sejarah.html" class="block px-4 py-2 hover:bg-gray-600">Sejarah</a></li>
+        <li><a href="Sarana.html" class="block px-4 py-2 hover:bg-gray-600">Sarana Prasarana</a></li>
+      </ul>
+    </li>
+    <li><a href="Berita.html" class="hover:underline">Berita</a></li>
+    <li><a href="Prestasi.html" class="hover:underline">Prestasi</a></li>
+    <li><a href="Eskul.html" class="hover:underline">Ekstrakurikuler</a></li>
+    <li><a href="Galeri.html" class="hover:underline">Galeri</a></li>
+    <li class="flex gap-3">
+      <a href="https://instagram.com/" target="_blank"><img src="ig.png" alt="Instagram" class="w-6 h-6"></a>
+      <a href="https://tiktok.com/" target="_blank"><img src="tiktok.png" alt="TikTok" class="w-6 h-6"></a>
+      <a href="https://youtube.com/" target="_blank"><img src="yt.png" alt="YouTube" class="w-6 h-6"></a>
+      <a href="https://facebook.com/" target="_blank"><img src="facebook logo.png" alt="Facebook" class="w-6 h-6"></a>
+    </li>
+  </ul>
+</nav>
+
+<!-- NAVBAR KHUSUS MOBILE -->
+<div class="md:hidden" x-data="{open:false, profil:false}">
+  <nav class="bg-gray-800 text-white p-4 flex items-center justify-between">
+    <!-- Logo -->
+    <div class="flex items-center gap-2 font-bold">
+      <img src="logo sma.png" alt="Logo SMA" class="w-8 h-auto">
+      Official Website
+    </div>
+
+    <!-- Sosmed + Hamburger -->
+    <div class="flex items-center gap-3">
+      <!-- Sosmed -->
+      <div class="flex gap-2">
+        <a href="https://instagram.com/" target="_blank"><img src="ig.png" alt="Instagram" class="w-6 h-6"></a>
+        <a href="https://tiktok.com/" target="_blank"><img src="tiktok.png" alt="TikTok" class="w-6 h-6"></a>
+        <a href="https://youtube.com/" target="_blank"><img src="yt.png" alt="YouTube" class="w-6 h-6"></a>
+        <a href="https://facebook.com/" target="_blank"><img src="facebook logo.png" alt="Facebook" class="w-6 h-6"></a>
+      </div>
+
+      <!-- Tombol Hamburger -->
+      <button @click="open = !open">
+        <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg x-show="open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Dropdown Menu Mobile -->
+  <div x-show="open" x-transition>
+    <ul class="flex flex-col bg-gray-700 text-white w-full">
+      <li><a href="index.html" class="block px-4 py-2 hover:bg-gray-600">Home</a></li>
+      
+      <!-- Profil dengan submenu -->
+      <li>
+        <button @click="profil = !profil" class="w-full flex justify-between items-center px-4 py-2 hover:bg-gray-600">
+          Profil
+          <span x-text="profil ? '▲' : '▼'"></span>
+        </button>
+        <ul x-show="profil" x-transition class="flex flex-col bg-gray-600">
+          <li><a href="Sambutan.html" class="block px-6 py-2 hover:bg-gray-500">Sambutan</a></li>
+          <li><a href="Visi.html" class="block px-6 py-2 hover:bg-gray-500">Visi & Misi</a></li>
+          <li><a href="Struktur.html" class="block px-6 py-2 hover:bg-gray-500">Struktur Organisasi</a></li>
+          <li><a href="Sejarah.html" class="block px-6 py-2 hover:bg-gray-500">Sejarah</a></li>
+          <li><a href="Sarana.html" class="block px-6 py-2 hover:bg-gray-500">Sarana Prasarana</a></li>
+        </ul>
+      </li>
+
+      <li><a href="index.html" class="block px-4 py-2 hover:bg-gray-600">Home</a></li>
+      <li><a href="Sambutan.html" class="block px-4 py-2 hover:bg-gray-600">Sambutan</a></li>
+      <li><a href="Visi.html" class="block px-4 py-2 hover:bg-gray-600">Visi & Misi</a></li>
+      <li><a href="Struktur.html" class="block px-4 py-2 hover:bg-gray-600">Struktur Organisasi</a></li>
+      <li><a href="Sejarah.html" class="block px-4 py-2 hover:bg-gray-600">Sejarah</a></li>
+      <li><a href="Sarana.html" class="block px-4 py-2 hover:bg-gray-600">Sarana Prasarana</a></li>
+      <li><a href="Berita.html" class="block px-4 py-2 hover:bg-gray-600">Berita</a></li>
+      <li><a href="Prestasi.html" class="block px-4 py-2 hover:bg-gray-600">Prestasi</a></li>
+      <li><a href="Eskul.html" class="block px-4 py-2 hover:bg-gray-600">Ekstrakurikuler</a></li>
+      <li><a href="Galeri.html" class="block px-4 py-2 hover:bg-gray-600">Galeri</a></li>
+    </ul>
+  </div>
+</div>
+
+    <section class="relative w-full h-screen overflow-hidden">
+  <video autoplay muted loop playsinline class="absolute w-full h-full object-cover">
+    <source src="VideoSma.mp4" type="video/mp4">
+  </video>
+
+  <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10">
+    <p class="text-lg md:text-xl">Welcome to</p>
+    <h1 class="text-3xl md:text-5xl font-bold">SMA NEGERI 1</h1>
+    <h1 class="text-3xl md:text-5xl font-bold">BENGKULU TENGAH</h1>
+    <a href="https://youtu.be/E-Zrl46GswA?si=uD-YMH-YeGnt4oOr" class="btn mt-4 inline-block" target="_blank">Learn More</a>
+  </div>
+</section>
+  <!-- Struktur Organisasi -->
+<section class="bg-blue-900 text-white py-12 mt-0">
+  <div class="max-w-5xl mx-auto px-4" data-aos="fade-down" data-aos-duration="1000" data-aos-once="false">
+    <h2 class="text-4xl font-bold mb-2 text-center">STRUKTUR ORGANISASI</h2>
+    <h3 class="text-xl mb-4 text-center">SMA Negeri 1 Bengkulu Tengah</h3>
+   <p class="font-lato text-lg text-white text-center max-w-xl mx-auto leading-relaxed">
+      Halaman ini menjelaskan tentang susunan jabatan, tanggung jawab, serta peran setiap bagian dalam mendukung kelancaran operasional sekolah. 
+      Struktur yang jelas dan terorganisir sangat penting untuk memastikan koordinasi yang efektif antara seluruh komponen yang ada di sekolah.
+    </p>
+  </div>
+</section>
+
+<!-- Tabel Struktur Organisasi -->
+<section class="bg-blue-900 text-white py-45 mt-0">
+  <div class="bg-white p-10 rounded-lg shadow-lg max-w-4xl mx-auto overflow-x-auto" data-aos="fade-up">
+    <table class="w-full text-base text-center table-auto border border-gray-300 leading-tight">
+      <thead class="bg-gray-200 text-gray-800 text-lg">
+        <tr>
+          <th class="border px-2 py-2">No</th>
+          <th class="border px-2 py-2">Nama</th>
+          <th class="border px-2 py-2">Jabatan</th>
+          <th class="border px-2 py-2">Foto</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-800">
+        <tr class="animate-up">
+          <td class="border px-2 py-2">1</td>
+          <td class="border px-2 py-2">Puji Hartati, M.Pd, Mat.</td>
+          <td class="border px-2 py-2">Kepala Sekolah</td>
+          <td class="border px-2 py-2">
+            <img src="Ibu Puji.png" alt="Foto Puji Hartati" class="w-16 h-30 object-cover mx-auto">
+          </td>
+        </tr>
+        <tr class="animate-up">
+          <td class="border px-2 py-2">2</td>
+          <td class="border px-2 py-2">Haryantoni, M.Pd</td>
+          <td class="border px-2 py-2">Waka Kurikulum</td>
+          <td class="border px-2 py-2">
+            <img src="pak toni.jpeg" alt="Foto Haryantoni" class="w-16 h-20 object-cover mx-auto">
+          </td>
+        </tr>
+        <tr class="animate-up">
+          <td class="border px-2 py-2">3</td>
+          <td class="border px-2 py-2">Hasnur Yakin, S.H</td>
+          <td class="border px-2 py-2">Waka Kesiswaan</td>
+          <td class="border px-2 py-2">
+            <img src="pak yakin.jpeg" alt="Foto Hasnur Yakin" class="w-16 h-20 object-cover mx-auto">
+          </td>
+        </tr>
+        <tr class="animate-up">
+          <td class="border px-2 py-2">4</td>
+          <td class="border px-2 py-2">Gunardi, M.Pd</td>
+          <td class="border px-2 py-2">Waka Sarpras</td>
+          <td class="border px-2 py-2">
+            <img src="pak gun.jpeg" alt="Foto Gunardi" class="w-16 h-20 object-cover mx-auto">
+          </td>
+        </tr>
+        <tr class="animate-up">
+          <td class="border px-2 py-2">5</td>
+          <td class="border px-2 py-2">Paulina, S.E</td>
+          <td class="border px-2 py-2">Waka Humas</td>
+          <td class="border px-2 py-2">
+            <img src="ibu pau.jpeg" alt="Foto Paulina" class="w-16 h-20 object-cover mx-auto">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--ruang navy di bawah tabel -->
+  <div class="h-16 bg-blue-900"></div>
+</section>
+<script>
+    function toggleMenu() {
+      document.getElementById("mobileMenu").classList.toggle("active");
+    }
+  </script>
+<!-- Script AOS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000,
+    easing: 'ease-out',
+    once: false,
+    offset: 200,
+  });
+
+  const observerOptions = { threshold: 0.5 };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      if (entry.isIntersecting) {
+        el.classList.remove('hidden-slide');
+        void el.offsetWidth;
+        el.classList.add('animate-slideInRight');
+      } else {
+        el.classList.remove('animate-slideInRight');
+        el.classList.add('hidden-slide');
+      }
+    });
+  }, observerOptions);
+
+  const sectionDesc = document.getElementById('section-desc');
+  const footer = document.getElementById('footer');
+  sectionDesc.classList.add('hidden-slide');
+  footer.classList.add('hidden-slide');
+  observer.observe(sectionDesc);
+  observer.observe(footer);
+</script>
+
+</body>
+</html>

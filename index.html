@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMA Negeri 1 Bengkulu Tengah</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family: Arial, sans-serif;}
+
+    [x-cloak] { display: none !important; }
+    @media (max-width: 767px) {
+      .geser-kanan-mobile {
+        margin-left: 3rem;
+      }
+      .naikkan-banner-mobile {
+        padding-top: 120px !important;
+      }
+    }
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(2, 50, 97);
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      z-index: 1000;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* jarak antara logo dan teks */
+      font-size: 1.2rem;
+      font-weight: bold;
+      font-family: 'Helvetica', serif;
+    }
+    .logo-img {
+      width: 40px; /* sesuaikan ukuran logo */
+      height: auto;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;      
+      margin: 0;
+      padding: 0;
+      transform: translateX(-20px); /* geser menu ke kiri */
+    }
+    nav ul li a {
+      color:#fff;
+      text-decoration:none;
+      font-family: "Verdana", serif;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+/* Hover efek untuk menu utama */
+nav ul li a {
+  color:#fff;
+  text-decoration:none;
+  font-family: "Verdana", serif;
+  font-size: 16px;
+  font-weight: normal;
+  padding: 8px 12px; /* biar area klik lebih besar */
+  border-radius: 5px; /* biar ada sudut halus */
+  transition: 0.3s;
+}
+
+nav ul li a:hover {
+  background: #045282fb; /* kuning emas */
+  color: #002244;      /* teks navy gelap */
+}
+
+    nav ul li {
+      position: relative; /* untuk submenu */
+    }
+    nav ul li .submenu {
+      display: none;
+      position: absolute;
+      top: 100%; 
+      left: 0;
+      background: rgba(2, 56, 109, 0.95);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      min-width: 220px;
+      border-radius: 5px;
+    }
+   /* Hover efek untuk menu utama */
+nav ul li a:hover {
+  background: #046eaffb; /* biru lebih terang */
+  color: #fff;           /* teks tetap putih */
+}
+    nav ul li.dropdown:hover .submenu {
+      display: block;
+    }
+    /* Hero */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .video-background {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .video-background iframe {
+      position: absolute;
+      top: 73%; 
+      left: 50%;
+      width: 100vw;
+      height: 70.25vw;
+      min-height: 100vh;
+      min-width: 177.78vh; 
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      border: none;
+    }
+
+    /* Hero Content (Teks di Tengah Video) */
+    .hero-content {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+      padding: 0 20px;
+      z-index: 2;
+    }
+
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 12px 28px;
+      border: 2px solid #fff;
+      border-radius: 30px;
+      color: #fff;
+      text-decoration: none;
+      transition: .3s;
+    }
+
+    .btn:hover {background:#fff; color:#002244;}
+  .berita h2 {
+  margin-bottom: 10px; /* jarak lebih kecil ke h3 */
+}
+
+.berita h3 {
+  margin-top: -2%;       /* reset margin atas */
+  margin-bottom: 25px; /* jarak ke grid */
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+    .latest-news {
+  padding: 80px 20px;
+  background: #012142; /* warna navy gelap */
+  color: #fff;
+  text-align: center;
+}
+
+.latest-news h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.latest-news h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #ffd700;
+  margin: 10px auto 0;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.news-card {
+  background: #fff;
+  color: #002244;
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: left;
+  transition: transform 0.3s;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+}
+
+.news-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.news-date {
+  font-weight: bold;
+  color: #ffd700;
+  padding: 10px 15px 0;
+}
+
+.news-card h3 {
+  font-size: 1.1rem;
+  padding: 5px 15px;
+}
+
+.news-card p {
+  font-size: 0.9rem;
+  padding: 0 15px 15px;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+}
+
+nav ul li.sosmed {
+  display: flex;
+  gap: 2px; /* jarak antar ikon */
+  margin-left: 20px; /* jarak dari menu terakhir */
+}
+
+nav ul li.sosmed a img {
+  width: 30px;  /* ukuran ikon */
+  height: 30px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+nav ul li.sosmed a img:hover {
+  transform: scale(1.2); /* efek zoom saat hover */
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR UTAMA UNTUK DESKTOP & TABLET -->
+<nav class="bg-gray-800 text-white p-4 hidden md:flex items-center justify-between">
+  <div class="flex items-center gap-2 text-xl font-bold">
+    <img src="logo sma.png" alt="Logo SMA" class="w-8 h-auto">
+    Official Website
+  </div>
+  <ul class="flex gap-6 items-center">
+    <li><a href="index.html" class="hover:underline">Home</a></li>
+    <li class="relative group">
+      <a href="#" class="hover:underline">Profil</a>
+      <ul class="absolute hidden group-hover:block bg-gray-700 mt-2 rounded shadow-lg">
+        <li><a href="Sambutan.html" class="block px-4 py-2 hover:bg-gray-600">Sambutan</a></li>
+        <li><a href="Visi.html" class="block px-4 py-2 hover:bg-gray-600">Visi & Misi</a></li>
+        <li><a href="Struktur.html" class="block px-4 py-2 hover:bg-gray-600">Struktur Organisasi</a></li>
+        <li><a href="Sejarah.html" class="block px-4 py-2 hover:bg-gray-600">Sejarah</a></li>
+        <li><a href="Sarana.html" class="block px-4 py-2 hover:bg-gray-600">Sarana Prasarana</a></li>
+      </ul>
+    </li>
+    <li><a href="Berita.html" class="hover:underline">Berita</a></li>
+    <li><a href="Prestasi.html" class="hover:underline">Prestasi</a></li>
+    <li><a href="Eskul.html" class="hover:underline">Ekstrakurikuler</a></li>
+    <li><a href="Galeri.html" class="hover:underline">Galeri</a></li>
+    <li class="flex gap-3">
+      <a href="https://instagram.com/" target="_blank"><img src="ig.png" alt="Instagram" class="w-6 h-6"></a>
+      <a href="https://tiktok.com/" target="_blank"><img src="tiktok.png" alt="TikTok" class="w-6 h-6"></a>
+      <a href="https://youtube.com/" target="_blank"><img src="yt.png" alt="YouTube" class="w-6 h-6"></a>
+      <a href="https://facebook.com/" target="_blank"><img src="facebook logo.png" alt="Facebook" class="w-6 h-6"></a>
+    </li>
+  </ul>
+</nav>
+
+<!-- NAVBAR KHUSUS MOBILE -->
+<div class="md:hidden" x-data="{open:false, profil:false}">
+  <nav class="bg-gray-800 text-white p-4 flex items-center justify-between">
+    <!-- Logo -->
+    <div class="flex items-center gap-2 font-bold">
+      <img src="logo sma.png" alt="Logo SMA" class="w-8 h-auto">
+      Official Website
+    </div>
+
+    <!-- Sosmed + Hamburger -->
+    <div class="flex items-center gap-3">
+      <!-- Sosmed -->
+      <div class="flex gap-2">
+        <a href="https://instagram.com/" target="_blank"><img src="ig.png" alt="Instagram" class="w-6 h-6"></a>
+        <a href="https://tiktok.com/" target="_blank"><img src="tiktok.png" alt="TikTok" class="w-6 h-6"></a>
+        <a href="https://youtube.com/" target="_blank"><img src="yt.png" alt="YouTube" class="w-6 h-6"></a>
+        <a href="https://facebook.com/" target="_blank"><img src="facebook logo.png" alt="Facebook" class="w-6 h-6"></a>
+      </div>
+
+      <!-- Tombol Hamburger -->
+      <button @click="open = !open">
+        <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg x-show="open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Dropdown Menu Mobile -->
+  <div x-show="open" x-transition>
+    <ul class="flex flex-col bg-gray-700 text-white w-full">
+      <li><a href="index.html" class="block px-4 py-2 hover:bg-gray-600">Home</a></li>
+      
+      <!-- Profil dengan submenu -->
+      <li>
+        <button @click="profil = !profil" class="w-full flex justify-between items-center px-4 py-2 hover:bg-gray-600">
+          Profil
+          <span x-text="profil ? '▲' : '▼'"></span>
+        </button>
+        <ul x-show="profil" x-transition class="flex flex-col bg-gray-600">
+          <li><a href="Sambutan.html" class="block px-6 py-2 hover:bg-gray-500">Sambutan</a></li>
+          <li><a href="Visi.html" class="block px-6 py-2 hover:bg-gray-500">Visi & Misi</a></li>
+          <li><a href="Struktur.html" class="block px-6 py-2 hover:bg-gray-500">Struktur Organisasi</a></li>
+          <li><a href="Sejarah.html" class="block px-6 py-2 hover:bg-gray-500">Sejarah</a></li>
+          <li><a href="Sarana.html" class="block px-6 py-2 hover:bg-gray-500">Sarana Prasarana</a></li>
+        </ul>
+      </li>
+
+      <li><a href="index.html" class="block px-4 py-2 hover:bg-gray-600">Home</a></li>
+      <li><a href="Sambutan.html" class="block px-4 py-2 hover:bg-gray-600">Sambutan</a></li>
+      <li><a href="Visi.html" class="block px-4 py-2 hover:bg-gray-600">Visi & Misi</a></li>
+      <li><a href="Struktur.html" class="block px-4 py-2 hover:bg-gray-600">Struktur Organisasi</a></li>
+      <li><a href="Sejarah.html" class="block px-4 py-2 hover:bg-gray-600">Sejarah</a></li>
+      <li><a href="Sarana.html" class="block px-4 py-2 hover:bg-gray-600">Sarana Prasarana</a></li>
+      <li><a href="Berita.html" class="block px-4 py-2 hover:bg-gray-600">Berita</a></li>
+      <li><a href="Prestasi.html" class="block px-4 py-2 hover:bg-gray-600">Prestasi</a></li>
+      <li><a href="Eskul.html" class="block px-4 py-2 hover:bg-gray-600">Ekstrakurikuler</a></li>
+      <li><a href="Galeri.html" class="block px-4 py-2 hover:bg-gray-600">Galeri</a></li>
+    </ul>
+  </div>
+</div>
+
+<section class="relative w-full h-screen overflow-hidden">
+  <video autoplay muted loop playsinline class="absolute w-full h-full object-cover">
+    <source src="VideoSma.mp4" type="video/mp4">
+  </video>
+
+  <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10">
+    <p class="text-lg md:text-xl">Welcome to</p>
+    <h1 class="text-3xl md:text-5xl font-bold">SMA NEGERI 1</h1>
+    <h1 class="text-3xl md:text-5xl font-bold">BENGKULU TENGAH</h1>
+    <a href="https://youtu.be/E-Zrl46GswA?si=uD-YMH-YeGnt4oOr" class="btn mt-4 inline-block" target="_blank">Learn More</a>
+  </div>
+</section>
+
+<section class="berita">
+   <div x-data="{
+    search: '',
+    selected: 'observasi-guru',
+    show: false,
+    suggestions: [
+      'Pelantikan pengurus osis baru',
+      'Observasi Guru',
+      'Kadis Dikbud',
+      'BPOM mengajar',
+      'Kepala sekolah pimpin upacara',
+      '100 Siswa SMANSA BT Ikuti UKBI'
+    ],
+    filtered() {
+      return this.suggestions.filter(s => s.toLowerCase().includes(this.search.toLowerCase()));
+    },
+    select(item) {
+      this.search = item;
+      this.selected = this.slugify(item);
+      this.show = false;
+      this.scrollToSelected();
+    },
+    checkSearch() {
+      let match = this.suggestions.find(s => s.toLowerCase() === this.search.toLowerCase());
+      if (match) {
+        this.selected = this.slugify(match);
+        this.scrollToSelected();
+      } else {
+        this.selected = '';
+      }
+    },
+    handleEnter() {
+      this.checkSearch();
+      this.show = false;
+    },
+    slugify(text) {
+      return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    },
+    scrollToSelected() {
+      this.$nextTick(() => {
+        const element = document.getElementById(this.selected);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.classList.add('ring', 'ring-blue-400');
+          setTimeout(() => {
+            element.classList.remove('ring', 'ring-blue-400');
+          }, 2000);
+        }
+      });
+    }
+}" 
+class="relative w-full md:w-1/2 mr-0 md:mx-auto -mt-8 px-4">
+
+            <!-- Input -->
+            <input
+              x-model="search"
+              @input="show = true"
+              @keydown.enter.prevent="handleEnter()"
+              type="text"
+              placeholder="Apa yang ingin anda cari?"
+              class="w-full px-4 py-2  rounded-full border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+              style="background-image: url('search.png'); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 30px 30px;"
+            >
+          
+            <!-- Suggestion List -->
+         <ul x-show="show && filtered().length > 0" class="absolute bg-white shadow-md mt-1 w-full rounded-lg z-20">
+  <template x-for="item in filtered()" :key="item">
+    <li 
+      @click="select(item)" 
+      class="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black" 
+      x-text="item">
+    </li>
+  </template>
+</ul>
+ <ul
+                x-show="show && search"
+                class="absolute z-10 bg-white text-black w-full mt-1 rounded-md shadow-md"
+              >
+                <template x-for="item in filtered()" :key="item">
+                  <li
+                    @click="select(item)"
+
+                    class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+                    x-text="item"
+                  ></li>
+                </template>
+                <li x-show="filtered().length === 0" class="px-4 py-2 text-gray-500">Tidak ditemukan</li>
+              </ul>
+            </div> 
+          </div>
+  <h2 class="mt-4 text-2xl font-bold">BERITA</h2>
+<h3 class="mt-1 text-gray-600">Baca berita kegiatan sekolah kami</h3>
+  <div class="berita-grid">
+    
+      <!-- Berita 1 -->
+    <div class="berita-card">
+       <div id="pelantikan-pengurus-osis-baru" class="bg-white text-black shadow-md rounded-lg overflow-hidden">
+      <div class="berita-tanggal">
+        <span class="hari">23</span>
+        <span class="bulan">Sep</span>
+      </div>
+      <img src="gambar6.jpg" alt="Berita 3">
+      <div class="berita-content">
+        <h3>Pelantikan Pengurus OSIS Baru oleh Waka Kesiswaan</h3>
+        <p>Pelantikan berlangsung saat upacara hari Senin oleh Waka Kesiswaan...</p>
+        <a href="#" class="btn-berita">Selengkapnya</a>
+       </div>
+      </div>
+    </div>
+
+<!-- Berita 2 -->
+    <div class="berita-card">
+      <div class="berita-tanggal">
+        <span class="hari">25</span>
+        <span class="bulan">Sep</span>
+      </div>
+      <img src="gambar5.jpg" alt="Berita 3">
+      <div class="berita-content">
+        <h3>100 Siswa SMANSA BT Ikuti UKBI</h3>
+        <p>Pelaksanaan UKBI online diikuti 100 siswa dari 4 ruangan...</p>
+        <a href="#" class="btn-berita">Selengkapnya</a>
+      </div>
+    </div>
+
+  <!-- Berita 3 -->
+    <div class="berita-card">
+      <div class="berita-tanggal">
+        <span class="hari">1</span>
+        <span class="bulan">Okt</span>
+      </div>
+      <img src="gambar4.jpg" alt="Berita 3">
+      <div class="berita-content">
+        <h3>Upacara Hari Kesaktian Pancasila Dipimpin Kepala Sekolah</h3>
+        <p>Upacara berlangsung khidmat dengan petugas dari OSIS...</p>
+        <a href="#" class="btn-berita">Selengkapnya</a>
+      </div>
+    </div>
+
+     <!-- Berita 4 -->
+    <div class="berita-card">
+      <div class="berita-tanggal">
+        <span class="hari">23</span>
+        <span class="bulan">Okt</span>
+      </div>
+      <img src="gambar3.jpg" alt="Berita 3">
+      <div class="berita-content">
+        <h3>BPOM Mengajar: Edukasi Bersama Ketua Tim Infokom</h3>
+        <p>SMA Negeri 1 Bengkulu Tengah jadi peserta program BPOM Mengajar...</p>
+        <a href="#" class="btn-berita">Selengkapnya</a>
+      </div>
+    </div>
+
+    <!-- Berita 5 -->
+    <div class="berita-card">
+      <div class="berita-tanggal">
+        <span class="hari">4</span>
+        <span class="bulan">Nov</span>
+      </div>
+      <img src="gambar2.jpg" alt="Berita 2">
+      <div class="berita-content">
+        <h3>Kadis Dikbud Hadiri Sosialisasi Antisipasi Kenakalan Remaja SMA Negeri 1 Bengkulu Tengah</h3>
+        <p>Kepala Dinas Dikbud Provinsi Bengkulu Bapak Saidirman, S.E., M.Si. hadiri Sosialiasi...</p>
+        <a href="#" class="btn-berita">Selengkapnya</a>
+      </div>
+    </div>
+
+     <!-- Berita 6 -->
+    <div class="berita-card">
+      <div class="berita-tanggal">
+        <span class="hari">8</span>
+        <span class="bulan">Nov</span>
+      </div>
+      <img src="gambar1.jpg" alt="Berita 1">
+      <div class="berita-content">
+        <h3>Observasi Guru: Evaluasi dan Peningkatan Kualitas Pengajaran di SMA Negeri 1 Bengkulu Tengah</h3>
+        <p>Observasi guru menjadi salah satu metode penting...</p>
+        <a href="selengkapnya.html" class="btn-berita">Selengkapnya</a>
+      </div>
+    </div>
+
+  <div class="center-custom">
+  <a href="Berita.html" class="btn-berita-all">
+    « Lihat Semua Berita »
+  </a>
+</div>
+  </div>
+</section>
+
+<style>
+.berita {
+  padding: 60px 20px;
+  text-align: center;
+  background: #1E3A8A
+; /* biru navy */
+}
+.berita h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #fff;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.center-custom {
+   text-align: center;
+  display: flex;
+  justify-content: center; /* bikin anaknya rata tengah horizontal */
+  margin-top: 20px;        /* jarak atas */
+  
+}
+
+.berita-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.berita-card {
+  background: #fff; /* putih */
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.berita-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.berita-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.berita-tanggal {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #001f3f; /* navy */
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.berita-tanggal .hari {
+  display: block;
+  font-size: 18px;
+}
+
+.berita-tanggal .bulan {
+  font-size: 14px;
+}
+
+.berita-content {
+  padding: 15px 20px 20px;
+  color: #333;
+}
+
+/* Judul berita */
+.berita-content h3 {
+  font-family: 'Arial', sans-serif; 
+  font-size: 1.2rem;                 
+  font-weight: bold;                
+  color: #001f3f;                   
+  margin-bottom: 10px;               
+}
+
+/* Deskripsi singkat */
+.berita-content p {
+  font-family: Verdana, Geneva, Tahoma, sans-serif ; 
+  font-size: 1rem;                     
+  color: #555;                       
+  line-height: 1.5;                    
+  margin-bottom: 15px;                 
+}
+
+#section-desc p {
+  font-family: 'Verdana', sans-serif; 
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ffffff; 
+}
+/* Tombol kecil di setiap berita */
+.btn-berita {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid #001f3f;
+  background: #1E3A8A
+;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  transition: 0.3s;
+}
+.btn-berita:hover {
+  background: #fff;
+  color: #001f3f;
+}
+
+/* Default (Mobile) */
+.btn-berita-all {
+  position: relative;
+  left: 35%;                    /* pas untuk mobile */
+  transform: translateX(-50%);
+  
+  padding: 10px 24px;
+  border: 2px solid #ffd700;
+  background: #ffd700;
+  color: #001f3f;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: inline-block;
+  max-width: 90%;
+  box-sizing: border-box;
+}
+
+/* Tablet (>=768px) */
+@media (min-width: 768px) {
+  .btn-berita-all {
+    left: 50%;   /* geser ke tengah beneran */
+  }
+}
+
+/* Desktop (>=1024px) */
+@media (min-width: 1024px) {
+  .btn-berita-all {
+    left: 140%;   /* tetap di tengah */
+  }
+}
+
+.btn-berita-all:hover {
+  background: #001f3f;
+  color: #ffd700;
+}
+</style>
+
+ <!-- Denah Lokasi & Kontak -->
+<section class="bg-white py-10 text-black" style="margin-top: 40px;">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 md:px-10">
+    
+   <!-- Denah Lokasi -->
+<div class="pr-2 md:pr-0 mr-4">
+  <h1 class="text-xl font-semibold mb-2">Denah Lokasi</h1>
+  <div class="w-full h-64 rounded shadow-md overflow-hidden">
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.1306136277076!2d102.3473179!3d-3.7817471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e36b72ca4310a19%3A0xe00e06ba6bc97819!2sSMA%20Negeri%2001%20Bengkulu%20Tengah!5e0!3m2!1sid!2sid!4v1750745456290!5m2!1sid!2sid" 
+      width="100%" 
+      height="100%" 
+      style="border:0;" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</div>
+
+    <!-- Kontak -->
+    <div class="pl-2 md:pl-0">
+      <h3 class="text-xl font-semibold mb-4">Kontak</h3>
+      <div class="mb-2 flex items-start">
+        <img src="Email.png" alt="Email" class="h-6 w-6 mr-2 mt-1">
+        <div>
+          <p class="font-semibold">Email</p>
+          <p>sman1benteng@gmail.com</p>
+        </div>
+      </div>
+
+      <div class="mb-2 flex items-start">
+        <img src="tlp.png" alt="Telepon" class="h-6 w-6 mr-2 mt-1">
+        <div>
+          <p class="font-semibold">Telepon</p>
+          <p>(0736) 7312022</p>
+        </div>
+      </div>
+
+      <div class="mb-2 flex items-start max-w-full overflow-hidden">
+        <img src="Website.png" alt="Website" class="h-6 w-6 mr-2 mt-1 flex-shrink-0">
+        <div class="w-full overflow-hidden">
+          <p class="font-semibold">Website</p>
+          <p class="text-sm leading-snug break-all w-full max-w-full">
+            http://www.smansabengkulutengah.sch.id
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--section baru untuk Video + Address -->
+<section class="py-10 text-black bg-gray-100">
+  <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1200px]">
+    <!-- Video 1 -->
+    <div class="rounded-lg shadow-lg overflow-hidden">
+      <iframe class="w-full h-60 md:h-64"
+        src="https://www.youtube.com/embed/p_Rg1sOXxx0"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <!-- Video 2 -->
+    <div class="rounded-lg shadow-lg overflow-hidden">
+      <iframe class="w-full h-60 md:h-64"
+  src="https://www.youtube.com/embed/LszQCM2PKJg"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+  playsinline>
+</iframe>
+    </div>
+
+    <!-- Address & Hours -->
+    <div class="text-sm leading-relaxed p-4 bg-white rounded-lg shadow">
+      <div class="mb-4">
+        <h2 class="font-semibold text-base">Address</h2>
+        <p>
+          Jalan Raya Kembang Seri KM. 12,<br>
+          Kembang Seri, Talang Empat, Taba Pasmah,<br>
+          Bengkulu Tengah, Kabupaten Bengkulu Tengah,<br>
+          Bengkulu 38119
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-semibold text-base mb-1">Hours</h2>
+        <div class="flex items-center space-x-2">
+          <class="mr-4 mt-[-55px] mb-0">Senin – Jum’at
+          <img src="bendera.png" alt="Bendera" class="h-20 md:h-30 w-auto" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Deskripsi Singkat -->
+<section class="relative overflow-hidden text-white py-5" id="section-desc">
+  <!-- Background gradasi animasi -->
+  <div class="absolute inset-0 animate-gradient"></div>
+  <div class="container mx-auto px-6 flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-4 relative z-10">
+    <img src="logo sma.png" alt="Logo" class="h-20">
+    <div>
+      <h2 class="text-lg font-semibold">SMA Negeri 1 Bengkulu Tengah</h2>
+      <p class="text-sm mt-1 max-w-full md:max-w-2xl">
+        SMA Negeri 1 Bengkulu Tengah adalah sekolah yang berkomitmen mencetak generasi cerdas dan berkarakter.
+        Dengan fasilitas yang memadai dan pengajaran berkualitas, sekolah ini mendukung perkembangan akademik dan non-akademik siswa untuk meraih prestasi terbaik.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="relative overflow-hidden text-white text-center py-4">
+  <!-- Background gradasi animasi -->
+  <div class="absolute inset-0 animate-gradient"></div>
+  <!-- Teks -->
+  <p class="relative z-10 text-sm px-4">
+    © 2025 SMA Negeri 1 Bengkulu Tengah. Designed and Developed by 
+    <span class="font-semibold">Yadi Armeliansyah</span>. All Rights Reserved.
+  </p>
+</footer>
+
+<style>
+@keyframes gradientMove {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background: linear-gradient(270deg, #1e3a8a, #2563eb, #3b82f6, #6366f1, #06b6d4, #1e3a8a);
+  background-size: 400% 400%;
+  animation: gradientMove 5s ease infinite;
+}
+</style>
+</body>
+</html>
